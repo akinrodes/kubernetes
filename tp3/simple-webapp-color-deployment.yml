@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-webapp-color-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: 
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: mmumshad/simple-webapp-color
+        ports:
+          - containerPort: 7070
+        env:
+          - name: APP_COLOR
+            value: blue
+
